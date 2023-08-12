@@ -1,0 +1,35 @@
+<app-admin-nav></app-admin-nav>
+<h3 class="text-center fs-5" style="font-size: 30px !important;">Users List</h3>
+<div class="form-signin p-5 w-50">
+   <form [formGroup]="form" (ngSubmit)="search()" >
+    <input type="text" formControlName ="name"  placeholder="Search" class="input form-control">
+  </form>
+</div>
+<div class="d-flex justify-content-end me-5 mb-3">
+  <button class="btn btn-primary" [routerLink]="['/admin/createuser']" >Add User</button>
+</div>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Profile</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="(userdata$ | async) as userdata">
+            <tr *ngFor="let item of userdata; let i = index">
+              <td>{{i+1}}</td>
+              <td><img class="rounded-circle" [src]='"http://localhost:5000/file/"+item.image' alt="No image" width="50px" height="50px"></td>
+              <td> {{item.name}} </td>
+              <td>{{item.email}} </td>
+              <td> {{ item.mobile }} </td>
+              <td><button class="btn btn-warning" (click)="editUser(item._id)">Edit</button></td>
+              <td><button class="btn btn-danger" (click)="deleteUser(item._id)">Delete</button></td>
+            </tr>
+          </tbody>
+      </table>
+</div>

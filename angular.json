@@ -24,9 +24,12 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+          "styles": [
+          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "src/styles.css"
+          
+        ],
+
             "scripts": []
           },
           "configurations": {
@@ -87,6 +90,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -94,5 +98,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "15acd225-d6ac-44f9-9a5b-c5ba63929cb4"
   }
 }

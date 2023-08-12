@@ -1,0 +1,43 @@
+
+  /* Custom CSS for styling the login card */
+  
+
+  .login-card {
+    width: 600px; /* Adjust the width as needed */
+    margin: auto;
+    padding: 20px;
+    box-shadow: 2 5px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: rgba(31, 101, 208, 0.271);
+  }
+
+
+  
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .example-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-form mat-form-field {
+    margin-bottom: 20px;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 600px) {
+    .login-card {
+      width: 90%;
+      max-width: 400px;
+    }
+  }
+  

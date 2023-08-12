@@ -1,0 +1,33 @@
+<app-admin-nav></app-admin-nav>
+
+
+  <div class="bg-full">
+    <mat-card class="login-card">
+      <div class="d-flex justify-content-center p-2">
+      <mat-card-header>
+        <h1>Edit User</h1>
+      </mat-card-header>
+    </div>
+  
+      <mat-card-content>
+        <form class="example-form" [formGroup]="form" (ngSubmit)="submit()">
+          <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" value="{{username}}" >
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="emailChange" value="{{ email }}">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobileNumber" value="{{ mobile }}">
+          </mat-form-field>
+         
+          <div class="d-flex justify-content-center">
+            <button mat-flat-button color="primary">Submit</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>

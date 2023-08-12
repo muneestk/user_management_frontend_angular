@@ -1,0 +1,36 @@
+<app-admin-nav></app-admin-nav>
+
+<div class="bg-full">
+    <mat-card class="login-card">
+      <div class="d-flex justify-content-center p-2">
+      <mat-card-header>
+        <h1>Create User</h1>
+      </mat-card-header>
+    </div>
+  
+      <mat-card-content>
+        <form class="example-form" [formGroup]="registration" (ngSubmit)="submit()">
+          <mat-form-field class="example-full-width">
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="name" placeholder="Enter your name">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Enter your name">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobileNumber" placeholder="Enter your mobile number">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Enter your password">
+          </mat-form-field>
+          <div class="d-flex justify-content-center">
+            <button mat-flat-button color="primary">Submit</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
