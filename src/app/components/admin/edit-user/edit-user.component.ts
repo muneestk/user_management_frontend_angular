@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Emmiter } from '../../emmiters/emmiter';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/service/user.service';
 
 
 @Component({
@@ -21,14 +21,12 @@ export class EditUserComponent implements OnInit {
   mobile!: number;
 
 
-  
-
   constructor(
     private formBuilder: FormBuilder, 
-    private http: HttpClient, 
     private router: ActivatedRoute,
     private route: Router ,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService : UserService
   ) { }
 
   public param:any;
@@ -44,13 +42,9 @@ export class EditUserComponent implements OnInit {
     this.router.params.subscribe(params => {
       this.param = params['id'];
     });
-     console.log(this.param);
-
     
       
-      this.http.get('http://localhost:5000/admin/active',{
-        withCredentials:true
-      }).subscribe((res:any)=>{
+    this.userService.authoriseChecking().subscribe((res:any)=>{
         this.getusers(this.param);
         Emmiter.authEmitter.emit(true)
       },
@@ -65,10 +59,7 @@ export class EditUserComponent implements OnInit {
 
    
   getusers(userId:any){
-    console.log(userId,'---------------');
-    this.http.get(`http://localhost:5000/admin/edituser/${userId}`,{
-      withCredentials: true
-    }).subscribe((res:any)=>{
+   this.userService.admiGetEditUser(userId).subscribe((res:any)=>{
       console.log(res);
       this.username = res.name;
       this.email = res.email;
@@ -94,24 +85,15 @@ export class EditUserComponent implements OnInit {
       this.toastr.error('fields cannot be empty')
 
     }
-    if(user.emailChange == null) {
-      user.emailChange = this.email
-    }else if(user.emailChange == ''){
-      this.toastr.error('fields cannot be empty')
-
+     if(user.emailChange == null) {
+      user.emailChange = this.email 
     }
-    if(user.mobileNumber == null) {
-      user.mobileNumber = this.mobile
-    }else if(user.mobileNumber == ''){
-      this.toastr.error('fields cannot be empty')
-
-    }else{
-      this.http.post('http://localhost:5000/admin/editUser',user,{
-        withCredentials: true
-      }).subscribe(()=>this.route.navigate(['/admin/dashboard']),
+     if(user.mobileNumber == null) {
+      user.mobileNumber = this.mobile   
+    }else{  
+      this.userService.admiEditUser(user).subscribe(()=>this.route.navigate(['/admin/dashboard']),
       (err)=>{
         this.toastr.error(err.error.message)
-
       })
     }
   }

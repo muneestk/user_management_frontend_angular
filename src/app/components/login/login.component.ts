@@ -1,9 +1,8 @@
 import { Component,OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Emmiter } from '../emmiters/emmiter';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,37 +10,41 @@ import { Emmiter } from '../emmiters/emmiter';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-
+  passwordVisibilityToggleClicked=false ;
+  hide:boolean = true;
+  responseData:any;
+  result:string = ''
  
   form: FormGroup = this.builder.group({
     email: "",
     password: ""
   });
 
+
    
   constructor(
     private builder: FormBuilder,
      private toastr: ToastrService,
-     private http:HttpClient,
      private router:Router,
+     private userService : UserService
      
-     ) {}
+     ) {
+      localStorage.clear();
+     }
+
+
+     onPasswordVisibilityToggleClick(event: Event): void {
+      event.preventDefault(); 
+      this.passwordVisibilityToggleClicked = true;
+      this.hide = !this.hide;
+    }
 
     
 
   ngOnInit(): void {
-    this.http.get('http://localhost:5000/user',{
-      withCredentials:true
-    }).subscribe(
-      (res:any) => {
-        Emmiter.authEmitter.emit(true)
-      },
-      (err) => {
-        Emmiter.authEmitter.emit(false)
-      }
-    )
+ 
   }
-   
+
   
 
   submit(){
@@ -49,9 +52,12 @@ export class LoginComponent implements OnInit{
      if(user.email == '' && user.password == ''){
       this.toastr.error('all the fields are required');
      }else{
-      this.http.post("http://localhost:5000/login",user,{
-        withCredentials:true
-      }).subscribe((res) => this.router.navigate(['/']),(err) =>{
+     this.userService.userLogin(user).subscribe((res) => {
+       this.responseData = res ;
+       console.log(this.responseData);
+       localStorage.setItem('token',this.responseData.jwtToken);
+       this.router.navigate(['/'])
+     },(err) =>{
         if (err.error && err.error.message) {
           this.toastr.error(err.error.message); 
         } else {

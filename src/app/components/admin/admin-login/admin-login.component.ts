@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Emmiter } from '../../emmiters/emmiter';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -24,22 +25,14 @@ export class AdminLoginComponent implements OnInit {
      private toastr: ToastrService,
      private http:HttpClient,
      private router:Router,
+     private userService:UserService
      
      ) {}
 
     
 
   ngOnInit(): void {
-  //   this.http.get('http://localhost:5000/admin/user',{
-  //     withCredentials:true
-  //   }).subscribe(
-  //     (res:any) => {
-  //       Emmiter.authEmitter.emit(true)
-  //     },
-  //     (err) => {
-  //       Emmiter.authEmitter.emit(false)
-  //     }
-  //   )
+
 }
 
 
@@ -48,9 +41,7 @@ submit(){
   if(admin.email == '' && admin.password == ''){
    this.toastr.error('all the fields are required');
   }else{
-   this.http.post("http://localhost:5000/admin/login",admin,{
-     withCredentials:true
-   }).subscribe((res) => this.router.navigate(['/admin/dashboard']),(err) =>{
+  this.userService.adminLogin(admin).subscribe((res) => this.router.navigate(['/admin/dashboard']),(err) =>{
      if (err.error && err.error.message) {
        this.toastr.error(err.error.message); 
      } else {

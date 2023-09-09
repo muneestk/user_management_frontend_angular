@@ -24,7 +24,7 @@
             <tr *ngFor="let item of userdata; let i = index">
               <td>{{i+1}}</td>
               <td><img class="rounded-circle" [src]='"http://localhost:5000/file/"+item.image' alt="No image" width="50px" height="50px"></td>
-              <td> {{item.name}} </td>
+              <td> {{ item.name | upperCase}} </td>
               <td>{{item.email}} </td>
               <td> {{ item.mobile }} </td>
               <td><button class="btn btn-warning" (click)="editUser(item._id)">Edit</button></td>

@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { ToastrModule } from 'ngx-toastr';
@@ -27,6 +27,10 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from '@ngrx/effects';
 import { postReducer, profileReducer } from './state/user.reducer';
 import { appEffects } from './state/user.effects';
+import {MatIconModule} from '@angular/material/icon';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TokenInterceptorService } from './token-intercepter.service';
+import { upperCase } from './custom.pipes';
 
 
 @NgModule({
@@ -42,7 +46,9 @@ import { appEffects } from './state/user.effects';
     AdminNavComponent,
     EditUserComponent,
     AdminRegisterComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    NotFoundComponent,
+    upperCase
   ],
   imports: [
     BrowserModule,
@@ -58,11 +64,11 @@ import { appEffects } from './state/user.effects';
     MatButtonModule,
     AdminRoutingModule,
     StoreModule.forRoot({userdetails:profileReducer,allusers:postReducer}),
-    EffectsModule.forRoot([appEffects])
-
+    EffectsModule.forRoot([appEffects]),
+    MatIconModule
   
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 

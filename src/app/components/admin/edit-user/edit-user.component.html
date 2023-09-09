@@ -13,15 +13,15 @@
         <form class="example-form" [formGroup]="form" (ngSubmit)="submit()">
           <mat-form-field class="example-full-width">
             <mat-label>Name</mat-label>
-            <input matInput formControlName="name" value="{{username}}" >
+            <input matInput formControlName="name" [(ngModel)]="username" >
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="emailChange" value="{{ email }}">
+            <input matInput formControlName="emailChange" [(ngModel)]="email">
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>Mobile Number</mat-label>
-            <input matInput formControlName="mobileNumber" value="{{ mobile }}">
+            <input matInput formControlName="mobileNumber" [(ngModel)]="mobile">
           </mat-form-field>
          
           <div class="d-flex justify-content-center">

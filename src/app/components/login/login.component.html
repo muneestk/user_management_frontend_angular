@@ -1,10 +1,10 @@
 
 <app-nav></app-nav>
-<div class="bg-full">
-  <mat-card class="login-card">
+<div class="background-container">
+  <mat-card class="login-card shadow">
     <div class="d-flex justify-content-center p-2">
     <mat-card-header>
-      <h1>Login</h1>
+      <h1 class="text-light">Login</h1>
     </mat-card-header>
   </div>
 
@@ -17,12 +17,16 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Enter your password">
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text' " placeholder="Enter your password">
+          <button mat-icon-button matSuffix (click)="onPasswordVisibilityToggleClick($event)" [attr.aria-label]="'Toggle password visibility'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
         </mat-form-field>
         <div class="d-flex justify-content-center">
           <button mat-flat-button color="primary">Submit</button>
         </div>
       </form>
+    
     </mat-card-content>
   </mat-card>
 </div>

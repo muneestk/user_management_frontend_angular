@@ -5,6 +5,7 @@ import { FormBuilder , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Emmiter } from '../../emmiters/emmiter';
+import { UserService } from 'src/app/service/user.service';
 
 
 
@@ -18,8 +19,8 @@ export class AdminRegisterComponent {
   constructor(
     private builder: FormBuilder,
      private toastr: ToastrService,
-     private http:HttpClient,
      private router:Router,
+     private userService:UserService
      
      ) {}
 
@@ -62,9 +63,7 @@ export class AdminRegisterComponent {
     let admin: any = this.registration.getRawValue();
 
     if (this.registration.valid) {
-      this.http.post('http://localhost:5000/admin/register', admin, {
-        withCredentials: true
-      }).subscribe(
+     this.userService.adminRegister(admin).subscribe(
         (res: any) => {
           Emmiter.authEmitter.emit(true);
           this.router.navigate(['/admin/dashboard']);

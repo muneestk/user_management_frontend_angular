@@ -23,7 +23,7 @@ yarn-error.log
 # Visual Studio Code
 .vscode/*
 !.vscode/settings.json
-!.vscode/tasks.json
+!.vscode/tasks.jsongit push -u origin main
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*

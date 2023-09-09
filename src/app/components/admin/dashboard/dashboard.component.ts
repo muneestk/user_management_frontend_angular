@@ -18,13 +18,14 @@ import { of } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+
   constructor(
-    private http:HttpClient,
     private store:Store<{allusers:Users[]}>,
     private router:Router,
-    private appService:UserService,
+    private userService:UserService,
     private toastr : ToastrService,
-    private builder : FormBuilder
+    private builder : FormBuilder,
   ){}
 
 
@@ -37,9 +38,7 @@ export class DashboardComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.http.get('http://localhost:5000/admin/active',{
-      withCredentials:true
-    }).subscribe((res:any)=>{
+    this.userService.authoriseChecking().subscribe((res:any)=>{
       this.store.dispatch(retrievepost())
       Emmiter.authEmitter.emit(true)
     },
@@ -48,7 +47,6 @@ export class DashboardComponent implements OnInit {
       Emmiter.authEmitter.emit(false)
     }
     )
-    this.store.dispatch(retrievepost())
   }
 
 
@@ -57,7 +55,7 @@ export class DashboardComponent implements OnInit {
   }
  
   deleteUser(userId: string) {
-    this.http.get(`http://localhost:5000/admin/deleteUser/${userId}`,{withCredentials:true}).subscribe(
+      this.userService.deleteUser(userId).subscribe(
       () => {
         this.store.dispatch(retrievepost());
         this.toastr.success('User successfully deleted');
@@ -73,15 +71,12 @@ export class DashboardComponent implements OnInit {
 
   search() {
     let user = this.form.getRawValue()
-    this.http.post('http://localhost:5000/admin/search', user, {
-      withCredentials: true
-    }).subscribe(
+    this.userService.searchUser(user).subscribe(
       (res: any) => {
         this.userdata$ = of(res)
-        console.log(res.users)
       },
       (err) => {
-        alert(err)
+        console.error('Error searching user:', err)
       }
     );
   }

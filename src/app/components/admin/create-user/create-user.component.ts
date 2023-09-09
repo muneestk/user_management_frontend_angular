@@ -4,6 +4,7 @@ import { FormBuilder , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Emmiter } from '../../emmiters/emmiter';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-create-user',
@@ -13,17 +14,15 @@ import { Emmiter } from '../../emmiters/emmiter';
 export class CreateUserComponent implements OnInit {
 
     constructor(
-      private builder: FormBuilder,
+       private builder: FormBuilder,
        private toastr: ToastrService,
-       private http:HttpClient,
        private router:Router,
+       private userService : UserService
        
        ) {}
 
        ngOnInit(): void {
-        this.http.get('http://localhost:5000/admin/active',{
-          withCredentials:true
-        }).subscribe((res:any)=>{
+       this.userService.authoriseChecking().subscribe((res:any)=>{
           Emmiter.authEmitter.emit(true)
         },
         (err)=>{
@@ -45,12 +44,11 @@ export class CreateUserComponent implements OnInit {
       let user: any = this.registration.getRawValue();
   
       if (this.registration.valid) {
-        this.http.post('http://localhost:5000/register', user, {
-          withCredentials: true
-        }).subscribe(
+         this.userService.admiCreateUser(user).subscribe(
           (res: any) => {
             Emmiter.authEmitter.emit(true);
             this.router.navigate(['/admin/dashboard']);
+            this.toastr.success(res.message);
           },
           (err) => {
             if (err.error && err.error.message) {
@@ -62,7 +60,7 @@ export class CreateUserComponent implements OnInit {
         );
       }
     
-            }
+   }
           
         
     

@@ -1,6 +1,18 @@
 
   /* Custom CSS for styling the login card */
   
+  .background-container {
+    background-image: url('../../../assets/wp2747935-black-4k-wallpapers.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 100vh; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
 
   .login-card {
     width: 500px; /* Adjust the width as needed */
@@ -9,7 +21,7 @@
     padding: 20px;
     box-shadow: 2 5px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    background-color: rgba(22, 46, 83, 0.271);
+    background-color: rgba(184, 188, 195, 0.332);
   }
 
 

@@ -21,6 +21,7 @@ const _ProfileReducer = createReducer(
 
 export function profileReducer(state:any,action:any){
     return _ProfileReducer(state,action)
+    
 }
 
 //----------------------------------------------------

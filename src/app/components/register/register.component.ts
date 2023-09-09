@@ -4,6 +4,7 @@ import { FormBuilder , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Emmiter } from '../emmiters/emmiter';
+import { UserService } from 'src/app/service/user.service';
 
 
 @Component({
@@ -15,10 +16,12 @@ export class RegisterComponent {
   constructor(
     private builder: FormBuilder,
      private toastr: ToastrService,
-     private http:HttpClient,
      private router:Router,
+     private userService : UserService
      
      ) {}
+
+  
 
   registration = this.builder.group({
     name: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(5)])),
@@ -57,9 +60,7 @@ export class RegisterComponent {
     let user: any = this.registration.getRawValue();
 
     if (this.registration.valid) {
-      this.http.post('http://localhost:5000/register', user, {
-        withCredentials: true
-      }).subscribe(
+     this.userService.registerUser(user).subscribe(
         (res: any) => {
           Emmiter.authEmitter.emit(true);
           this.router.navigate(['/']);

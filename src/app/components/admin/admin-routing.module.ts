@@ -7,6 +7,7 @@ import { EditUserComponent } from "./edit-user/edit-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { AdminRegisterComponent } from "./admin-register/admin-register.component";
+import { NotFoundComponent } from "../not-found/not-found.component";
 
 const routes: Routes = [
     {
@@ -17,7 +18,8 @@ const routes: Routes = [
         { path: 'createuser', component: CreateUserComponent },
         { path: 'edituser/:id', component: EditUserComponent },
         { path: 'register', component: AdminRegisterComponent },
-      ],
+        {path:'**',component:NotFoundComponent},
+      ]
     },
   ];
 
